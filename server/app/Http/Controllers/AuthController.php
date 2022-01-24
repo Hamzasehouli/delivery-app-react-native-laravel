@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -11,7 +12,7 @@ class AuthController extends Controller
     public function signup(Request $request)
     {
 
-        $validatedData = $request->validate([
+        $validated = $request->validate([
             'firstname' => ['required', 'string'],
             'lastname' => ['required', 'string'],
             'email' => ['required', 'email', 'string'],
@@ -23,7 +24,7 @@ class AuthController extends Controller
             'firstname' => $validated['firstname'],
             'lastname' => $validated['lastname'],
             'email' => $validated['email'],
-            'password' => Hsah::make($validated['password'], [
+            'password' => Hash::make($validated['password'], [
                 'rounds' => 12,
             ]),
             'phone' => $validated['phone'],
@@ -36,7 +37,7 @@ class AuthController extends Controller
             'data' => [
                 'user' => $user,
             ],
-            'token'=>$token
+            'token' => $token,
         ], 201);
 
     }
@@ -44,6 +45,6 @@ class AuthController extends Controller
     ///////LOGIN
     public function login(Request $request)
     {
-
+        return 'kkk';
     }
 }
