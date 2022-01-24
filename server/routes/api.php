@@ -20,7 +20,7 @@ Route::post('/auth/forgetpassword', [AuthController::class, 'forgetpassword']);
 Route::post('/auth/resetpassword', [AuthController::class, 'resetpassword']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::patch('/auth/updatemydata', [AuthController::class, 'updatmyedata']);
+    Route::patch('/auth/updatemydata', [AuthController::class, 'updatemydata']);
     Route::get('/auth/getmydata', [AuthController::class, 'getmydata']);
     Route::delete('/auth/deleteme', [AuthController::class, 'deleteme']);
     Route::patch('/auth/updatepassword', [AuthController::class, 'updatepassword']);

@@ -110,11 +110,19 @@ class AuthController extends Controller
             ],
         ], 200);
     }
+
     //////Update MY DATA
 
-    public function updatemydata()
+    public function updatemydata(Request $request)
     {
+        if ($request->password) {
+            return response([
+                'status' => 'fail',
+                'message' => 'If you want to update the password, please use the appropriate route',
+            ], 403);
+        }
         $user = Auth::user();
+        $user->update($request->all());
         return response([
             'status' => 'success',
             'data' => [
