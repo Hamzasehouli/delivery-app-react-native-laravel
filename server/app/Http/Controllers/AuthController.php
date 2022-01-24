@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -15,7 +16,7 @@ class AuthController extends Controller
         $validated = $request->validate([
             'firstname' => ['required', 'string'],
             'lastname' => ['required', 'string'],
-            'email' => ['required', 'email', 'string'],
+            'email' => ['required', 'email', 'string', 'unique:users'],
             'password' => ['required', 'string'],
             'phone' => ['required', 'string', 'min:10'],
         ]);
@@ -65,6 +66,60 @@ class AuthController extends Controller
                 'user' => $user,
             ],
             'token' => $token,
+        ], 200);
+    }
+
+    ///////LOG OUT
+
+    public function logout()
+    {
+        Auth::user()->tokens()->delete();
+        return response([
+            'status' => 'success',
+            'message' => 'You have logged out successfully',
+        ], 200);
+    }
+    ////////////
+    //////////Forgetpassword
+
+    public function forgetpassword(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => ['required', 'email', 'string'],
+        ]);
+
+        $user = User::where('email', $validated['email'])->first();
+
+        if (!$user) {
+            return response(['status' => 'fail', 'message' => 'No user found or password is incorrect'], 404);
+            exit;
+        }
+
+    }
+
+    //////GET MY DATA
+
+    public function getmydata()
+    {
+
+        $user = Auth::user();
+        return response([
+            'status' => 'success',
+            'data' => [
+                'user' => $user,
+            ],
+        ], 200);
+    }
+    //////Update MY DATA
+
+    public function updatemydata()
+    {
+        $user = Auth::user();
+        return response([
+            'status' => 'success',
+            'data' => [
+                'user' => $user,
+            ],
         ], 200);
     }
 }

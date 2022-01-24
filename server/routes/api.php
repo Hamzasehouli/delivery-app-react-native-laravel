@@ -16,7 +16,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/auth/signup', [AuthController::class, 'signup']);
 Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/forgetpassword', [AuthController::class, 'forgetpassword']);
+Route::post('/auth/resetpassword', [AuthController::class, 'resetpassword']);
 
 Route::middleware('auth:sanctum')->group(function () {
-
+    Route::patch('/auth/updatemydata', [AuthController::class, 'updatmyedata']);
+    Route::get('/auth/getmydata', [AuthController::class, 'getmydata']);
+    Route::delete('/auth/deleteme', [AuthController::class, 'deleteme']);
+    Route::patch('/auth/updatepassword', [AuthController::class, 'updatepassword']);
+    Route::post('/auth/logout', [AuthController::class, 'logout']);
 });
