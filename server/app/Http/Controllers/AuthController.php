@@ -99,6 +99,19 @@ class AuthController extends Controller
 
     //////GET MY DATA
 
+    public function deleteme()
+    {
+
+        $user = Auth::user();
+        $user->delete();
+        return response([
+            'status' => 'success',
+            'message' => 'User delete successfully',
+        ], 204);
+    }
+
+    /////////////Delete me
+
     public function getmydata()
     {
 
