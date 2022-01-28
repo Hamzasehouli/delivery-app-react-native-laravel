@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class welcomeEmail extends Mailable
+class welcomeemail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -30,7 +30,7 @@ class welcomeEmail extends Mailable
     public function build()
     {
         return $this->subject("Welcome $this->firstname")->view('emails.welcome')->with([
-            'username'=>$this->firstname
+            'username' => $this->firstname,
         ]);
     }
 }

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\welcomeEmail;
+use App\Mail\sendResetPasswordLinkEmail;
+use App\Mail\welcomeemail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,7 @@ class AuthController extends Controller
 
         $token = $user->createToken('myToken')->plainTextToken;
 
-        Mail::to($user->email)->send(new welcomeEmail($user->firstname));
+        Mail::to($user->email)->send(new welcomeemail($user->firstname));
 
         return response([
             'status' => 'success',
@@ -99,6 +100,56 @@ class AuthController extends Controller
             exit;
         }
 
+        $token = bin2hex(random_bytes(16));
+        $user->resettoken = $token;
+        $user->resettokencreatedat = time();
+        $user->save();
+
+        $link = "http://localhost:8000/api/auth/resetpassword/$token";
+
+        Mail::to($user->email)->send(new sendResetPasswordLinkEmail($link));
+
+        return response([
+            'status' => 'success',
+            'message' => 'Email sent successfully successfully',
+        ], 200);
+
+    }
+
+    ////Reset password
+
+    public function resetpassword($token, Request $request)
+    {
+
+        $user = User::where('resettoken', $token)->first();
+
+        if (!$user) {
+            return response(['status' => 'fail', 'message' => 'No user found or password is incorrect'], 404);
+            exit;
+        }
+
+        if (($user->resettokencreatedat + 10 * 60) < time()) {
+            $user->resettoken = '';
+            $user->resettokencreatedat = '';
+            $user->save();
+            return response(['status' => 'fail', 'message' => 'Link has expired, please try again'], 400);
+        }
+
+        $validated = $request->validate([
+            'password' => ['required', 'string', 'min:8'],
+            'confirmPassword' => ['required', 'string', 'min:8'],
+        ]);
+
+        if($validated['password'] !== $validated['confirmPassword']){
+            return response(['status' => 'fail', 'message' => 'Please confirm your password'], 400);
+        }
+
+        $user->update(['password' => Hash::make($validated['password']), 'resettoken' => '', 'resettokencreatedat' => '']);
+        return response([
+            'status' => 'success',
+            'message' => 'Password has been reset successfully',
+        ], 200);
+
     }
 
     //////GET MY DATA
@@ -147,4 +198,5 @@ class AuthController extends Controller
             ],
         ], 200);
     }
+
 }
