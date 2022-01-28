@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\welcomeEmail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -32,6 +34,8 @@ class AuthController extends Controller
         ]);
 
         $token = $user->createToken('myToken')->plainTextToken;
+
+        Mail::to($user->email)->send(new welcomeEmail($user->firstname));
 
         return response([
             'status' => 'success',
