@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -14,7 +15,12 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+
+        $myOrders = Order::where('user_id', Auth::id())->get();
+        if (!$myOrders) {
+            return response(['status' => 'fail', 'message' => 'You have got no orders yet, start ordering'], 404);
+        }
+        return response(['status' => 'success', 'results' => count($myOrders), 'data' => ['orders' => $myOrders]], 200);
     }
 
     /**
@@ -36,6 +42,8 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         //
+        $order = Order::create($request->all());
+        return $order;
     }
 
     /**

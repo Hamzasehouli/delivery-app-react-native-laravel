@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/auth/deleteme', [AuthController::class, 'deleteme']);
     Route::patch('/auth/updatepassword', [AuthController::class, 'updatepassword']);
     Route::post('/auth/logout', [AuthController::class, 'logout']);
+    Route::get('/orders', [OrderController::class, 'index']);
+    Route::post('/orders', [OrderController::class, 'store']);
 });
 
 ////Restaurant
