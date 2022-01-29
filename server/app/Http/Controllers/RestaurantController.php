@@ -14,7 +14,6 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        // return 'walo';
         $restaurants = Restaurant::all();
 
         return response([
