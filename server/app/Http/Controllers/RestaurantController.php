@@ -53,7 +53,13 @@ class RestaurantController extends Controller
      */
     public function show($id)
     {
-        //
+        $restaurant = Restaurant::find($id);
+        if (!$restaurant) {
+            return response(['status' => 'Fail', 'message' => 'No restaurant found with id: ' . $id], 404);
+            exit;
+        }
+
+        return response(['status' => 'success', 'data' => ['restaurant' => $restaurant]], 200);
     }
 
     /**
