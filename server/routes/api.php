@@ -31,8 +31,9 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 ////Restaurant
-Route::get('/restaurants', [RestaurantController::class], 'index');
-Route::post('/restaurants', [RestaurantController::class], 'store');
-Route::get('/restaurants/{id}', [RestaurantController::class], 'show');
-Route::patch('/restaurants/{id}', [RestaurantController::class], 'update');
-Route::delete('/restaurants/{id}', [RestaurantController::class], 'destroy');
+
+Route::get('/restaurants', [RestaurantController::class, 'index']);
+Route::post('/restaurants', [RestaurantController::class, 'store']);
+Route::get('/restaurants/{id}', [RestaurantController::class, 'show']);
+Route::patch('/restaurants/{id}', [RestaurantController::class, 'update']);
+Route::delete('/restaurants/{id}', [RestaurantController::class, 'destroy']);

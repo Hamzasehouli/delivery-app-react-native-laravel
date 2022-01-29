@@ -10,16 +10,18 @@ class Restaurant extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title',
+        'name',
         'cover_image',
         'adresse_street',
         'adresse_number',
         'adresse_zip',
         'adresse_city',
+        'adresse_country',
         'restaurant_category',
         'rating_average',
         'ratings',
-        'delivery_fee',
+        'delivery_fee_min',
+        'delivery_fee_max',
         'delivery_time_min',
         'delivery_time_max',
         'item_id',
