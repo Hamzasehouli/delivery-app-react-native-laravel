@@ -31,7 +31,7 @@ class RestaurantController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -42,7 +42,8 @@ class RestaurantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $restaurant = Restaurant::create($request->all());
+        return response(['status' => 'success', 'data' => ['restaurant' => $restaurant]], 201);
     }
 
     /**
@@ -82,7 +83,14 @@ class RestaurantController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $restaurant = Restaurant::find($id);
+        if (!$restaurant) {
+            return response(['status' => 'Fail', 'message' => 'No restaurant found with id: ' . $id], 404);
+            exit;
+        }
+
+        $restaurant->update($request->all());
+        return response(['status' => 'success', 'message' => 'Restaurant has been updated successfully'], 200);
     }
 
     /**
@@ -93,6 +101,12 @@ class RestaurantController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $restaurant = Restaurant::find($id);
+        if (!$restaurant) {
+            return response(['status' => 'Fail', 'message' => 'No restaurant found with id: ' . $id], 404);
+            exit;
+        }
+        Restaurant::destroy($id);
+        return response(['status' => 'success', 'message' => 'Restaurant has been deleted successfully'], 204);
     }
 }
