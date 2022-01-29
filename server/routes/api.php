@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RestaurantController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
  */#
 
+///AUTH
+
 Route::post('/auth/signup', [AuthController::class, 'signup']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/forgetpassword', [AuthController::class, 'forgetpassword']);
@@ -26,3 +29,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/auth/updatepassword', [AuthController::class, 'updatepassword']);
     Route::post('/auth/logout', [AuthController::class, 'logout']);
 });
+
+////Restaurant
+Route::get('/restaurants', [RestaurantController::class], 'index');
+Route::post('/restaurants', [RestaurantController::class], 'store');
+Route::get('/restaurants/{id}', [RestaurantController::class], 'show');
+Route::patch('/restaurants/{id}', [RestaurantController::class], 'update');
+Route::delete('/restaurants/{id}', [RestaurantController::class], 'destroy');
