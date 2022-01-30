@@ -70,7 +70,7 @@ class OrderController extends Controller
             "delivery_time_max" => $validated['delivery_time_max'],
 
         ]);
-        return $order;
+        return response(['status' => 'success', 'data' => ['order' => $order]], 201);
     }
 
     /**
@@ -79,9 +79,15 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show($id)
     {
-        //
+        // $order = Order::find($id);
+        // if (!$order) {
+        //     return response(['status' => 'Fail', 'message' => 'No order found with id: ' . $id], 404);
+        //     exit;
+        // }
+
+        // return response(['status' => 'success', 'data' => ['order' => $Order]], 200);
     }
 
     /**

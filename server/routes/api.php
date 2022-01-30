@@ -31,6 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/auth/updatepassword', [AuthController::class, 'updatepassword']);
     Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::get('/orders', [OrderController::class, 'index']);
+    // Route::get('/orders/{id}', [OrderController::class, 'show']);
     Route::post('/orders', [OrderController::class, 'store']);
 });
 

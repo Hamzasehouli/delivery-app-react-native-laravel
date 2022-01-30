@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Item;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,4 +27,9 @@ class Restaurant extends Model
         'delivery_time_max',
         'item_id',
     ];
+
+    public function items()
+    {
+        return $this->hasMany(Item::class);
+    }
 }
