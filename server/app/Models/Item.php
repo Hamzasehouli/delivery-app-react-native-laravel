@@ -11,16 +11,16 @@ class Item extends Model
     use HasFactory;
 
     protected $fillable = [
-            'restaurant_id',
-            'name',
-            'image',
-            'type',
-            'extra',
-            'drinks',
-            'fries',
-            'sauce',
-            'removed_ingredients',
-            'price',
+        'restaurant_id',
+        'name',
+        'image',
+        'type',
+        'extra',
+        'drinks',
+        'fries',
+        'sauce',
+        'removed_ingredients',
+        'price',
     ];
 
     public function restaurant()

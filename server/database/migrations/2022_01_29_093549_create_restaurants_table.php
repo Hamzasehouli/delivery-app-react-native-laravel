@@ -29,7 +29,6 @@ class CreateRestaurantsTable extends Migration
             $table->decimal('delivery_fee_max')->nullable();
             $table->decimal('delivery_time_min');
             $table->decimal('delivery_time_max');
-            $table->integer('item_id');
             $table->timestamps();
         });
     }

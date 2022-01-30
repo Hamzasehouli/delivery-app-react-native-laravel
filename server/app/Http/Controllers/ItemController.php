@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Item;
 use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
+use App\Models\Item;
+use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
@@ -34,9 +35,11 @@ class ItemController extends Controller
      * @param  \App\Http\Requests\StoreItemRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreItemRequest $request)
+    public function store(Request $request)
     {
-        //
+
+        $item = Item::create($request->all());
+        return response(['status' => 'success', 'data' => ['item' => $item]], 201);
     }
 
     /**
@@ -68,9 +71,16 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateItemRequest $request, Item $item)
+    public function update(Request $request, $id)
     {
-        //
+        $item = Item::find($id);
+        if (!$item) {
+            return response(['status' => 'Fail', 'message' => 'No item found with id: ' . $id], 404);
+            exit;
+        }
+
+        $item->update($request->all());
+        return response(['status' => 'success', 'message' => 'item has been updated successfully'], 200);
     }
 
     /**
@@ -79,8 +89,14 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Item $item)
+    public function destroy($id)
     {
-        //
+        $item = Item::find($id);
+        if (!$item) {
+            return response(['status' => 'Fail', 'message' => 'No item found with id: ' . $id], 404);
+            exit;
+        }
+        Item::destroy($id);
+        return response(['status' => 'success', 'message' => 'item has been deleted successfully'], 204);
     }
 }

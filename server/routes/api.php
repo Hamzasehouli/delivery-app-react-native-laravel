@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\UserController;
@@ -52,6 +53,14 @@ Route::group(['middleware' => ['auth:sanctum', 'RoleMiddleware:admin']], functio
     Route::delete('/users/{id}', [UserController::class, 'destroy']);
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/users/{id}', [UserController::class, 'show']);
+
+    //ITEMS
+
+    Route::post('/items', [ItemController::class, 'store']);
+    Route::patch('/items/{id}', [ItemController::class, 'update']);
+    Route::delete('/items/{id}', [ItemController::class, 'destroy']);
+    Route::get('/items', [ItemController::class, 'index']);
+    Route::get('/items/{id}', [ItemController::class, 'show']);
 
 });
 
